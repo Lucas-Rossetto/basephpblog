@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+  db:
+      image: mysql:5.7
+      environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ipssi
+  apache:
+      image: 'bitnami/apache:latest'
+      ports:
+      - '80:8080'
+      - '443:8443'
+      volumes:
+      - ./PhpstormProjects/base_php_blog:/app
+  php:
+      build: docker/php/
+      volumes:
+      - './:/usr/share/nginx/html'
+  adminer:
+      image: 'adminer:latest'
+      ports:
+      - '8081:8080'
